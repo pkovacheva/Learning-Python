@@ -1,0 +1,10 @@
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+import pandas as pd
+print('Done')
+from sklearn.datasets import load_boston
+boston = load_boston()
+print(boston.keys())
+boston = pd.DataFrame(boston.data, columns=boston.feature_names)
+boston.head()
