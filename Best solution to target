@@ -1,0 +1,63 @@
+import itertools
+import random
+import string
+
+target = [9, 3, 3, 3]
+number_of_iterations = 500
+
+
+def random_generator():
+    return [random.randint(0, 9) for _ in range(len(target))]
+
+
+def estimate_solution(target, solution):
+    # estimation = 0
+    # for i in range(len(target)):
+    #     estimation += abs(target[i] - solution[i])
+    #
+    # return estimation
+    return sum(abs(x - y) for (x, y) in zip(target, solution))
+
+
+def random_search():
+    solution = random_generator()
+    estimation = estimate_solution(target, solution)
+    print("Initial Solution:", solution, " Value:", estimation)
+    for i in range(number_of_iterations):
+        new_solution = random_generator()
+        new_estimation = estimate_solution(target, new_solution)
+        if new_estimation < estimation:
+            solution = new_solution
+            estimation = new_estimation
+        print("Current Solution:", solution, " Value:", estimation)
+    print("Best Solution:", solution, " Value:", estimation)
+
+
+def full_search():
+    # solutions = itertools.permutations(range(10), len(target))
+    count = 0
+
+    solutions = itertools.product(range(10), repeat=len(target))
+    solution = solutions.__next__()
+    estimation = estimate_solution(target, solution)
+    print("Initial Solution:", solution, " Value:", estimation)
+    for solution in solutions:
+        new_solution = solution
+        new_estimation = estimate_solution(target, new_solution)
+        if new_estimation < estimation:
+            solution = new_solution
+            estimation = new_estimation
+        if estimation == 0:
+            break
+    print("Best Solution: {} -> {}".format(solution, estimation))
+    print("Number of Iterations {}".format(count))
+
+
+# random_search()
+full_search()
+
+# solutions = itertools.permutations(range(5), 5)
+# print(solutions)
+# print(solutions.__next__())
+# print(solutions.__next__())
+# print(list(solutions))
