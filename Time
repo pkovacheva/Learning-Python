@@ -1,0 +1,31 @@
+import timeit
+code_to_test = """
+import csv
+from collections import defaultdict
+
+ITEM_ID = 0
+CITY = 2
+
+file_handler = open('sales-001.csv')
+reader = csv.reader(file_handler)
+
+city_by_sales = defaultdict(set)
+for line in reader:
+    city_by_sales[line[ITEM_ID]].add(line[CITY])
+
+unique_sales_by_city = defaultdict(set)
+for item_id, city_names in city_by_sales.items():
+    if len(city_names) == 1:
+        city_name = city_names.pop()
+        unique_sales_by_city[city_name].add(item_id)
+
+for city_name, items_ids in sorted(unique_sales_by_city.items()):
+    print(', '.join([city_name] + sorted(items_ids)))
+"""
+a = range(100000)
+b = []
+for i in a:
+    b.append(i*2)
+
+elapsed_time = timeit.timeit(code_to_test, number=100)/100
+print(elapsed_time)
