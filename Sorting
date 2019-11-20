@@ -1,0 +1,18 @@
+import random
+
+my_list = [random.randint(0, 100) for _ in range(50)]
+print('Разбъркани', my_list)
+# my_list.sort()
+# print(my_list)
+
+def bubbleSort(my_list):
+    for passnum in range(len(my_list)-1,0,-1):
+        for i in range(passnum):
+            if my_list[i]>my_list[i+1]:
+                temp = my_list[i]
+                my_list[i] = my_list[i+1]
+                my_list[i+1] = temp
+
+
+bubbleSort(my_list)
+print('Подредени',my_list)
